@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vaporwave Portfolio</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(180deg, #1a0033 0%, #330066 50%, #660099 100%);
+            color: #fff;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .retro-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(90deg, transparent 0%, rgba(255, 0, 255, 0.1) 50%, transparent 100%),
+                repeating-linear-gradient(
+                    0deg,
+                    rgba(0, 255, 255, 0.03) 0px,
+                    transparent 1px,
+                    transparent 2px,
+                    rgba(0, 255, 255, 0.03) 3px
+                );
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .sun {
+            position: fixed;
+            bottom: 30%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 300px;
+            height: 300px;
+            background: linear-gradient(180deg, #ff6ec7 0%, #ff00ff 50%, #ff1493 100%);
+            border-radius: 50%;
+            box-shadow: 
+                0 0 60px #ff00ff,
+                0 0 120px #ff00ff,
+                0 0 180px rgba(255, 0, 255, 0.5);
+            z-index: 0;
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: translateX(-50%) scale(1); }
+            50% { transform: translateX(-50%) scale(1.05); }
+        }
+
+        .grid {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 50%;
+            background-image: 
+                linear-gradient(rgba(0, 255, 255, 0.3) 2px, transparent 2px),
+                linear-gradient(90deg, rgba(0, 255, 255, 0.3) 2px, transparent 2px);
+            background-size: 50px 50px;
+            transform: perspective(500px) rotateX(60deg);
+            transform-origin: bottom;
+            z-index: 0;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { background-position: 0 0; }
+            100% { background-position: 0 50px; }
+        }
+
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 50%;
+            z-index: 0;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: #fff;
+            border-radius: 50%;
+            animation: twinkle 3s ease-in-out infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: rgba(26, 0, 51, 0.8);
+            border-bottom: 3px solid #ff00ff;
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.5);
+        }
+
+        .logo {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 16px;
+            background: linear-gradient(90deg, #ff00ff, #00ffff, #ff00ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% auto;
+            animation: gradient 3s linear infinite;
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% center; }
+            100% { background-position: 200% center; }
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #00ffff;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-weight: bold;
+            text-shadow: 0 0 10px #00ffff;
+            transition: all 0.3s ease;
+            letter-spacing: 2px;
+        }
+
+        .nav-links a:hover {
+            color: #ff00ff;
+            text-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 1;
+            padding: 100px 20px 50px;
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 900px;
+        }
+
+        .glitch-title {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 48px;
+            background: linear-gradient(90deg, #ff00ff, #00ffff, #ff1493);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 30px;
+            text-shadow: 
+                3px 3px 0 #ff00ff,
+                -3px -3px 0 #00ffff;
+            animation: glitchText 5s infinite;
+        }
+
+        @keyframes glitchText {
+            0%, 90%, 100% { transform: translate(0); }
+            92% { transform: translate(-3px, 3px); }
+            94% { transform: translate(3px, -3px); }
+            96% { transform: translate(-3px, -3px); }
+            98% { transform: translate(3px, 3px); }
+        }
+
+        .subtitle {
+            font-size: 24px;
+            color: #00ffff;
+            text-shadow: 0 0 10px #00ffff;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .tagline {
+            font-size: 16px;
+            color: #ff6ec7;
+            margin-bottom: 40px;
+            line-height: 1.8;
+        }
+
+        .retro-btn {
+            display: inline-block;
+            padding: 15px 40px;
+            background: linear-gradient(45deg, #ff00ff, #00ffff);
+            color: #1a0033;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 2px;
+            border: 3px solid #fff;
+            box-shadow: 
+                0 0 20px rgba(255, 0, 255, 0.5),
+                inset 0 0 20px rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .retro-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 
+                0 0 30px rgba(255, 0, 255, 0.8),
+                0 0 40px rgba(0, 255, 255, 0.8);
+        }
+
+        .retro-btn::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transform: rotate(45deg);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { left: -50%; }
+            100% { left: 150%; }
+        }
+
+        section {
+            padding: 100px 50px;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-title {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 32px;
+            text-align: center;
+            margin-bottom: 60px;
+            background: linear-gradient(90deg, #ff00ff, #00ffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 200px;
+            height: 3px;
+            background: linear-gradient(90deg, #ff00ff, #00ffff);
+            margin: 20px auto 0;
+            box-shadow: 0 0 10px #ff00ff;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .vaporwave-card {
+            background: linear-gradient(135deg, rgba(255, 0, 255, 0.2), rgba(0, 255, 255, 0.2));
+            border: 3px solid #ff00ff;
+            padding: 30px;
+            position: relative;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+        .vaporwave-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .vaporwave-card:hover::before {
+            left: 100%;
+        }
+
+        .vaporwave-card:hover {
+            transform: translateY(-10px);
+            border-color: #00ffff;
+            box-shadow: 
+                0 0 30px rgba(255, 0, 255, 0.6),
+                0 0 50px rgba(0, 255, 255, 0.4);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .card-number {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 12px;
+            color: #00ffff;
+            text-shadow: 0 0 10px #00ffff;
+        }
+
+        .card-icon {
+            font-size: 40px;
+            filter: drop-shadow(0 0 10px #ff00ff);
+        }
+
+        .card-title {
+            font-size: 24px;
+            color: #ff00ff;
+            text-shadow: 0 0 10px #ff00ff;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        .card-description {
+            color: #fff;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .retro-tag {
+            padding: 5px 15px;
+            background: rgba(0, 255, 255, 0.2);
+            border: 2px solid #00ffff;
+            color: #00ffff;
+            font-size: 12px;
+            text-transform: uppercase;
+            font-weight: bold;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+        }
+
+        .palm-trees {
+            position: fixed;
+            bottom: 10%;
+            width: 100%;
+            z-index: 0;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 50px;
+            pointer-events: none;
+        }
+
+        .palm {
+            font-size: 100px;
+            opacity: 0.3;
+            filter: drop-shadow(0 0 20px #ff00ff);
+        }
+
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+        }
+
+        .skill-box {
+            background: linear-gradient(135deg, rgba(255, 0, 255, 0.3), rgba(0, 255, 255, 0.3));
+            border: 3px solid #00ffff;
+            padding: 30px 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .skill-box:hover {
+            border-color: #ff00ff;
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(255, 0, 255, 0.8);
+        }
+
+        .skill-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+            display: block;
+            filter: drop-shadow(0 0 10px #ff00ff);
+        }
+
+        .skill-name {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 10px;
+            color: #00ffff;
+            text-shadow: 0 0 10px #00ffff;
+            text-transform: uppercase;
+        }
+
+        .contact-box {
+            max-width: 600px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, rgba(255, 0, 255, 0.2), rgba(0, 255, 255, 0.2));
+            border: 4px solid #ff00ff;
+            padding: 60px 40px;
+            text-align: center;
+            box-shadow: 0 0 40px rgba(255, 0, 255, 0.5);
+        }
+
+        .contact-title {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 24px;
+            background: linear-gradient(90deg, #ff00ff, #00ffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 30px;
+        }
+
+        .contact-text {
+            color: #fff;
+            font-size: 16px;
+            margin-bottom: 40px;
+            line-height: 1.8;
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .contact-link {
+            padding: 12px 25px;
+            background: linear-gradient(45deg, #ff00ff, #00ffff);
+            color: #1a0033;
+            text-decoration: none;
+            font-weight: bold;
+            border: 2px solid #fff;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(255, 0, 255, 0.5);
+        }
+
+        .contact-link:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 25px rgba(0, 255, 255, 0.8);
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px;
+            border-top: 3px solid #ff00ff;
+            margin-top: 100px;
+            background: rgba(26, 0, 51, 0.8);
+        }
+
+        .footer-text {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 10px;
+            color: #00ffff;
+            text-shadow: 0 0 10px #00ffff;
+            text-transform: uppercase;
+        }
+
+        @media (max-width: 768px) {
+            .glitch-title {
+                font-size: 24px;
+            }
+
+            .subtitle {
+                font-size: 18px;
+            }
+
+            section {
+                padding: 60px 20px;
+            }
+
+            .section-title {
+                font-size: 20px;
+            }
+
+            .navbar {
+                padding: 15px 20px;
+            }
+
+            .nav-links {
+                gap: 15px;
+            }
+
+            .nav-links a {
+                font-size: 10px;
+            }
+
+            .sun {
+                width: 200px;
+                height: 200px;
+            }
+
+            .palm {
+                font-size: 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="retro-bg"></div>
+    <div class="sun"></div>
+    <div class="grid"></div>
+    <div class="stars"></div>
+    <div class="palm-trees">
+        <div class="palm">🌴</div>
+        <div class="palm">🌴</div>
+    </div>
+
+    <nav class="navbar">
+        <div class="logo">RETRO.DEV</div>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1 class="glitch-title">WELCOME TO<br>THE FUTURE</h1>
+            <p class="subtitle">Digital Dreams • Neon Vibes</p>
+            <p class="tagline">
+                Creating nostalgic experiences with modern technology<br>
+                Bringing back the aesthetic of yesterday, today
+            </p>
+            <a href="#projects" class="retro-btn">Enter Portfolio</a>
+        </div>
+    </section>
+
+    <section id="projects">
+        <h2 class="section-title">Featured Projects</h2>
+        <div class="projects-grid">
+            <div class="vaporwave-card">
+                <div class="card-header">
+                    <div class="card-number">[01]</div>
+                    <div class="card-icon">🎮</div>
+                </div>
+                <h3 class="card-title">Retro Arcade</h3>
+                <p class="card-description">
+                    A collection of classic arcade games reimagined with modern web technologies. Features pixel-perfect graphics and authentic 8-bit sound effects.
+                </p>
+                <div class="card-tags">
+                    <span class="retro-tag">Canvas</span>
+                    <span class="retro-tag">WebGL</span>
+                    <span class="retro-tag">Web Audio</span>
+                </div>
+            </div>
+
+            <div class="vaporwave-card">
+                <div class="card-header">
+                    <div class="card-number">[02]</div>
+                    <div class="card-icon">📼</div>
+                </div>
+                <h3 class="card-title">VHS Streaming</h3>
+                <p class="card-description">
+                    Streaming platform with authentic VHS effects and retro UI. Includes tracking distortion, color bleeding, and scan line effects.
+                </p>
+                <div class="card-tags">
+                    <span class="retro-tag">React</span>
+                    <span class="retro-tag">Video.js</span>
+                    <span class="retro-tag">CSS Filters</span>
+                </div>
+            </div>
+
+            <div class="vaporwave-card">
+                <div class="card-header">
+                    <div class="card-number">[03]</div>
+                    <div class="card-icon">🕹️</div>
+                </div>
+                <h3 class="card-title">Synthwave Radio</h3>
+                <p class="card-description">
+                    Online radio player featuring synthwave, vaporwave, and retrowave music. Includes visualizer with neon spectrum analyzer.
+                </p>
+                <div class="card-tags">
+                    <span class="retro-tag">Web Audio API</span>
+                    <span class="retro-tag">Canvas</span>
+                    <span class="retro-tag">Node.js</span>
+                </div>
+            </div>
+
+            <div class="vaporwave-card">
+                <div class="card-header">
+                    <div class="card-number">[04]</div>
+                    <div class="card-icon">💾</div>
+                </div>
+                <h3 class="card-title">Pixel Art Studio</h3>
+                <p class="card-description">
+                    Browser-based pixel art editor with retro color palettes, animation tools, and sprite sheet export functionality.
+                </p>
+                <div class="card-tags">
+                    <span class="retro-tag">TypeScript</span>
+                    <span class="retro-tag">Canvas API</span>
+                    <span class="retro-tag">IndexedDB</span>
+                </div>
+            </div>
+
+            <div class="vaporwave-card">
+                <div class="card-header">
+                    <div class="card-number">[05]</div>
+                    <div class="card-icon">🌆</div>
+                </div>
+                <h3 class="card-title">Neon City</h3>
+                <p class="card-description">
+                    Interactive 3D cyberpunk city built with Three.js. Explore neon-lit streets with procedurally generated buildings and atmospheric effects.
+                </p>
+                <div class="card-tags">
+                    <span class="retro-tag">Three.js</span>
+                    <span class="retro-tag">WebGL</span>
+                    <span class="retro-tag">GLSL</span>
+                </div>
+            </div>
+
+            <div class="vaporwave-card">
+                <div class="card-header">
+                    <div class="card-number">[06]</div>
+                    <div class="card-icon">📟</div>
+                </div>
+                <h3 class="card-title">Retro Chat</h3>
+                <p class="card-description">
+                    Real-time chat application styled like classic 90s messenger apps. Includes ASCII art, retro emojis, and pixel fonts.
+                </p>
+                <div class="card-tags">
+                    <span class="retro-tag">Socket.io</span>
+                    <span class="retro-tag">Express</span>
+                    <span class="retro-tag">MongoDB</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills">
+        <h2 class="section-title">Skill Set</h2>
+        <div class="skills-container">
+            <div class="skill-box">
+                <span class="skill-icon">⚛️</span>
+                <div class="skill-name">React</div>
+            </div>
+            <div class="skill-box">
+                <span class="skill-icon">🎨</span>
+                <div class="skill-name">CSS3</div>
+            </div>
+            <div class="skill-box">
+                <span class="skill-icon">⚡</span>
+                <div class="skill-name">JavaScript</div>
+            </div>
+            <div class="skill-box">
+                <span class="skill-icon">🔷</span>
+                <div class="skill-name">TypeScript</div>
+            </div>
+            <div class="skill-box">
+                <span class="skill-icon">🚀</span>
+                <div class="skill-name">Node.js</div>
+            </div>
+            <div class="skill-box">
+                <span class="skill-icon">🎮</span>
+                <div class="skill-name">WebGL</div>
+            </div>
+            <div class="skill-box">
+                <span class="skill-icon">🎵</span>
+                <div class="skill-name">Web Audio</div>
+            </div>
+            <div class="skill-box">
+                <span class="skill-icon">🌐</span>
+                <div class="skill-name">REST API</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="contact-box">
+            <h2 class="contact-title">Let's Connect</h2>
+            <p class="contact-text">
+                Ready to create something nostalgic?<br>
+                Let's bring your retro dreams to life!
+            </p>
+            <div class="contact-links">
+                <a href="mailto:retro@vaporwave.com" class="contact-link">📧 Email</a>
+                <a href="#" class="contact-link">💼 LinkedIn</a>
+                <a href="#" class="contact-link">🐙 GitHub</a>
+                <a href="#" class="contact-link">🎵 Spotify</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p class="footer-text">© 2025 • Made with 💜 in the 80s aesthetic</p>
+    </footer>
+
+    <script>
+        // Create stars
+        const starsContainer = document.querySelector('.stars');
+        for (let i = 0; i < 100; i++) {
+            const star = document.createElement('div');
+            star.classList.add('star');
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.animationDelay = Math.random() * 3 + 's';
+            starsContainer.appendChild(star);
+        }
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Parallax effect for sun
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const sun = document.querySelector('.sun');
+            const grid = document.querySelector('.grid');
+            
+            sun.style.transform = `translateX(-50%) translateY(${scrolled * 0.3}px)`;
+            grid.style.opacity = Math.max(0, 1 - scrolled / 800);
+        });
+
+        // Fade in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.vaporwave-card, .skill-box').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.8s ease';
+            observer.observe(el);
+        });
+
+        // Glitch effect on random cards
+        setInterval(() => {
+            const cards = document.querySelectorAll('.vaporwave-card');
+            const randomCard = cards[Math.floor(Math.random() * cards.length)];
+            randomCard.style.transform = 'translateY(-10px) translateX(2px)';
+            setTimeout(() => {
+                randomCard.style.transform = 'translateY(0)';
+            }, 100);
+        }, 5000);
+    </script>
+</body>
+</html>
